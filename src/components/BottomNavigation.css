@@ -1,0 +1,189 @@
+.bottom-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 20px;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  position: relative;
+  min-width: 60px;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover .nav-icon {
+  transform: scale(1.1);
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.15);
+}
+
+.nav-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.nav-item.active .nav-label {
+  font-weight: 600;
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .bottom-navigation {
+    height: 70px;
+    padding: 0 16px;
+  }
+  
+  .nav-item {
+    padding: 6px 12px;
+    min-width: 50px;
+  }
+  
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .nav-label {
+    font-size: 10px;
+  }
+}
+
+/* Safe area for devices with home indicator */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-navigation {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+    height: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Animation for page transitions */
+.nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.nav-item:active::after {
+  left: 100%;
+}
+
+/* Ripple effect on tap */
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+/* Focus states for accessibility */
+.nav-item:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bottom-navigation {
+    background: rgba(0, 0, 0, 0.9);
+    border-top: 2px solid rgba(255, 255, 255, 0.8);
+  }
+  
+  .nav-item {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .nav-item.active {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .nav-item,
+  .nav-icon,
+  .nav-label {
+    transition: none;
+  }
+  
+  .nav-item:hover {
+    transform: none;
+  }
+  
+  .nav-item:hover .nav-icon {
+    transform: none;
+  }
+}
